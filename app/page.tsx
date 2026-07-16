@@ -156,16 +156,19 @@ type Project = {
   solution: string;
   results: string;
   github: string;
+  category: string;
   secondaryLink?: {
     label: string;
     href: string;
   };
+  projectImage?: string;
   visual?: "default" | "n8n" | "weather";
 };
 
 const projects: Project[] = [
   {
     title: "SuperStore ETL Pipeline",
+    category: "Data Warehousing",
     overview:
       "A complete retail analytics solution that combines Python ETL, an MS SQL Server star schema, and a Tableau dashboard for SuperStore sales analysis.",
     problem:
@@ -187,6 +190,7 @@ const projects: Project[] = [
   },
   {
     title: "AWS + Snowflake Weather Data Pipeline",
+    category: "Cloud & Data Engineering",
     overview:
       "A serverless weather ingestion pipeline that fetches live API data, processes it through AWS services, and lands it in Snowflake for analysis.",
     problem:
@@ -205,10 +209,12 @@ const projects: Project[] = [
       label: "LinkedIn Post",
       href: "https://www.linkedin.com/posts/shariq-mateen-61b724264_aws-dataengineer-lambda-activity-7345352497172996096-biz_?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEDkFHcBIAei9XmZgojERUt2btK5pTj8B0o",
     },
+    projectImage: "/aws-snowflake-pipeline.png",
     visual: "weather",
   },
   {
     title: "Data Warehouse using Pentaho",
+    category: "ETL & Warehousing",
     overview:
       "Enterprise warehouse project using Pentaho PDI to consolidate operational systems into a dimensional model.",
     problem:
@@ -225,6 +231,7 @@ const projects: Project[] = [
   },
   {
     title: "AI Automation using n8n",
+    category: "AI & Automation",
     overview:
       "An automated lead capture and classification workflow built in n8n with OpenAI to triage submissions and send structured notifications.",
     problem:
@@ -239,10 +246,12 @@ const projects: Project[] = [
     results:
       "Reduced manual triage work and created a reusable AI automation pattern for lead qualification and notification routing.",
     github: "https://github.com/ShariqMateen/n8n-lead-capture-flow",
+    projectImage: "/n8n-workflow.png",
     visual: "n8n",
   },
   {
     title: "Customer Churn Analysis",
+    category: "Analytics",
     overview:
       "End-to-end analytics project combining data modeling, feature engineering, and executive-facing churn dashboards.",
     problem:
@@ -259,6 +268,7 @@ const projects: Project[] = [
   },
   {
     title: "Book Scraping ETL Pipeline",
+    category: "ETL & Python",
     overview:
       "Automated web extraction pipeline that collects catalog data, transforms it, and loads it for analysis.",
     problem:
@@ -275,6 +285,7 @@ const projects: Project[] = [
   },
   {
     title: "Business Intelligence Dashboard",
+    category: "Analytics & BI",
     overview:
       "Executive dashboard suite focused on KPI monitoring, trend analysis, and drill-down reporting.",
     problem:
@@ -291,6 +302,7 @@ const projects: Project[] = [
   },
   {
     title: "Database Design Projects",
+    category: "Database Design",
     overview:
       "Relational modeling and database design work focused on normalization, performance, and reporting-readiness.",
     problem:
@@ -653,204 +665,121 @@ function ProjectCard({
   project: Project;
   index: number;
 }) {
+  const hasImage = Boolean(project.projectImage);
+
   return (
-    <Reveal delay={(index % 3) * 0.08}>
-      <Card className="h-full overflow-hidden">
-        <CardContent className="p-6 sm:p-7">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="max-w-2xl">
-              <Badge className="mb-4">Case Study</Badge>
-              <h3 className="text-2xl font-semibold text-white">
-                {project.title}
-              </h3>
-              <p className="mt-3 text-base leading-7 text-slate-300">
-                {project.overview}
-              </p>
+    <Reveal delay={(index % 3) * 0.06}>
+      <motion.div
+        whileHover={{ y: -6 }}
+        transition={{ type: "spring", stiffness: 300 }}
+        className="group h-full"
+      >
+        <div className="glass-panel relative h-full overflow-hidden rounded-3xl border border-violet-400/12 transition-all duration-300 group-hover:border-violet-400/30 group-hover:shadow-[0_20px_60px_rgba(124,58,237,0.15)]">
+          {/* Image area */}
+          {hasImage ? (
+            <div className="relative overflow-hidden border-b border-violet-400/10">
+              <img
+                src={project.projectImage}
+                alt={project.title}
+                className="h-52 w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Dark overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080b18]/80 via-transparent to-transparent" />
+              {/* Category pill on image */}
+              <span className="absolute left-4 top-4 rounded-full border border-violet-400/30 bg-violet-900/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200 backdrop-blur-md">
+                {project.category}
+              </span>
             </div>
-            <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs uppercase tracking-[0.22em] text-emerald-300">
-              Enterprise Workflow
-            </div>
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-5">
-              <InfoBlock title="Problem Statement" content={project.problem} />
-              <InfoBlock title="Challenges" content={project.challenges} />
-              <InfoBlock title="Solution" content={project.solution} />
-              <InfoBlock title="Results" content={project.results} highlight />
-            </div>
-
-            <div className="space-y-5">
+          ) : (
+            /* Gradient banner for projects without image */
+            <div className="relative flex h-28 items-center justify-between overflow-hidden border-b border-violet-400/10 bg-gradient-to-br from-violet-900/30 via-purple-900/20 to-[#080b18] px-6">
+              <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-violet-500/10 blur-2xl" />
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-violet-300">
-                  Architecture Diagram
-                </p>
-                <div className="mt-3 rounded-3xl border border-white/10 bg-slate-950/40 p-4">
-                  <ProjectArchitecture project={project} />
-                </div>
+                <span className="rounded-full border border-violet-400/25 bg-violet-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-300">
+                  {project.category}
+                </span>
               </div>
-
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-amber-300">
-                  Tech Stack
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.stack.map((item) => (
-                    <Badge key={item} className="tracking-[0.12em] normal-case">
-                      {item}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-violet-300">
-                  ETL Workflow
-                </p>
-                <div className="mt-3 space-y-3">
-                  {project.workflow.map((step, workflowIndex) => (
-                    <div key={step} className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-semibold text-white">
-                        {workflowIndex + 1}
-                      </div>
-                      <div className="pipeline-line flex-1 rounded-full bg-white/10 px-4 py-3 text-sm text-slate-200">
-                        {step}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex gap-2">
+                {project.stack.slice(0, 3).map((s) => (
+                  <div key={s} className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400">
+                    <Database className="h-4 w-4" />
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noreferrer"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              <GitFork className="h-4 w-4" />
-              GitHub Link
-            </a>
-            {project.secondaryLink ? (
+          {/* Content */}
+          <div className="flex h-full flex-col p-5">
+            <h3 className="text-lg font-bold text-white leading-snug">
+              {project.title}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-slate-400 line-clamp-2">
+              {project.overview}
+            </p>
+
+            {/* Results highlight */}
+            <div className="mt-4 rounded-2xl border border-amber-400/15 bg-amber-400/8 px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-400">Result</p>
+              <p className="mt-1 text-sm text-slate-300 line-clamp-2">{project.results}</p>
+            </div>
+
+            {/* Stack pills */}
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {project.stack.slice(0, 5).map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-violet-400/20 bg-violet-400/8 px-2.5 py-1 text-[11px] font-medium text-violet-300"
+                >
+                  {item}
+                </span>
+              ))}
+              {project.stack.length > 5 && (
+                <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-slate-400">
+                  +{project.stack.length - 5} more
+                </span>
+              )}
+            </div>
+
+            {/* Workflow steps */}
+            <div className="mt-4 flex flex-wrap items-center gap-1">
+              {project.workflow.map((step, i) => (
+                <div key={step} className="flex items-center gap-1">
+                  <span className="text-[11px] text-slate-300">{step}</span>
+                  {i < project.workflow.length - 1 && (
+                    <ArrowRight className="h-2.5 w-2.5 text-violet-400" />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* CTA buttons */}
+            <div className="mt-5 flex flex-wrap gap-2 border-t border-white/5 pt-4">
               <a
-                href={project.secondaryLink.href}
+                href={project.github}
                 target="_blank"
                 rel="noreferrer"
-                className={buttonVariants({ variant: "default" })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-violet-400/25 bg-violet-400/10 px-4 py-2 text-xs font-semibold text-violet-300 transition hover:border-violet-400/50 hover:bg-violet-400/20"
               >
-                <ExternalLink className="h-4 w-4" />
-                {project.secondaryLink.label}
+                <GitFork className="h-3.5 w-3.5" />
+                GitHub
               </a>
-            ) : null}
+              {project.secondaryLink ? (
+                <a
+                  href={project.secondaryLink.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-400/8 px-4 py-2 text-xs font-semibold text-amber-300 transition hover:border-amber-400/40 hover:bg-amber-400/15"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  {project.secondaryLink.label}
+                </a>
+              ) : null}
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.div>
     </Reveal>
-  );
-}
-
-function ProjectArchitecture({ project }: { project: Project }) {
-  if (project.visual === "n8n") {
-    return (
-      <div className="space-y-4">
-        <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1.2fr] xl:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr]">
-          {[
-            { label: "Webhook", icon: Workflow },
-            { label: "Edit Fields", icon: FileJson },
-            { label: "Basic LLM Chain", icon: BrainCircuit },
-            { label: "Code", icon: Cpu },
-            { label: "IF", icon: Bot },
-            { label: "Send Email", icon: Send },
-          ].map((step, stepIndex, array) => {
-            const Icon = step.icon;
-            const isLast = stepIndex === array.length - 1;
-
-            return (
-              <div key={step.label} className="contents">
-                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-center">
-                  <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950/60 text-emerald-300">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm font-semibold text-white">{step.label}</p>
-                </div>
-                {!isLast ? (
-                  <div className="hidden items-center justify-center xl:flex">
-                    <ArrowRight className="h-4 w-4 text-emerald-300" />
-                  </div>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-        <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
-          <p className="text-sm leading-7 text-slate-300">
-            Visual flow mirrors the workflow you shared: inbound webhook capture,
-            field cleanup, OpenAI-powered intent classification, code-based scoring,
-            conditional routing, and structured email notification.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (project.visual === "weather") {
-    return (
-      <div className="space-y-4">
-        <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
-          {[
-            { label: "Weather API", icon: Cloud },
-            { label: "AWS Scheduler", icon: Activity },
-            { label: "AWS Lambda", icon: Cpu },
-            { label: "DynamoDB", icon: Database },
-            { label: "Amazon S3", icon: FileJson },
-            { label: "Snowflake", icon: Sparkles },
-          ].map((step) => {
-            const Icon = step.icon;
-            return (
-              <div
-                key={step.label}
-                className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4 text-center"
-              >
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950/60 text-cyan-300">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <p className="text-sm font-semibold text-white">{step.label}</p>
-              </div>
-            );
-          })}
-        </div>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-            DynamoDB Streams trigger downstream processing
-          </span>
-          <ArrowRight className="h-4 w-4 text-cyan-300" />
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-            S3 acts as intermediary storage before Snowflake load
-          </span>
-          <ArrowRight className="h-4 w-4 text-cyan-300" />
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-            STS secures Snowflake access
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      {project.architecture.map((step, stepIndex) => (
-        <div key={step} className="flex items-center gap-3">
-          <div className="rounded-2xl border border-cyan-400/15 bg-cyan-400/10 px-4 py-3 text-sm text-slate-100">
-            {step}
-          </div>
-          {stepIndex < project.architecture.length - 1 ? (
-            <ArrowRight className="h-4 w-4 text-cyan-300" />
-          ) : null}
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -1169,12 +1098,12 @@ export default function Home() {
             <Reveal>
               <SectionHeading
                 eyebrow="Featured Projects"
-                title="Case studies that show architecture thinking, ETL execution, and measurable outcomes"
-                description="Each project is framed as an enterprise delivery story: the business problem, architecture, workflow, challenges, solution, and outcome."
+                title="Real projects. Real architecture. Measurable outcomes."
+                description="From cloud-native pipelines to AI automation workflows — each card is a live delivery story with stack, results, and source code."
               />
             </Reveal>
 
-            <div className="mt-12 grid gap-6">
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {projects.map((project, index) => (
                 <ProjectCard key={project.title} project={project} index={index} />
               ))}

@@ -50,6 +50,7 @@ const navLinks = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Services", href: "#services" },
+  { label: "Certifications", href: "#certifications" },
   { label: "Timeline", href: "#timeline" },
   { label: "Contact", href: "#contact" },
 ];
@@ -370,6 +371,22 @@ const timeline = [
     body:
       "Consistently improved pipeline quality, reporting speed, and workflow efficiency for analytics and operations teams.",
   },
+];
+
+const certifications = [
+  {
+    title: "Generative AI Application Developer Certificate",
+    issuer: "NCEAC - HEC & UETIANS Lahore Endowment Foundation",
+    award: "Top Performer Awarded",
+    image: "/cert-application-developer.jpg",
+    postLink: "https://www.linkedin.com/posts/shariq-mateen-61b724264_generativeai-aiapplicationdeveloper-topperformer-activity-7468620304924430336-Fd0V?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEDkFHcBIAei9XmZgojERUt2btK5pTj8B0o",
+  },
+  {
+    title: "Generative AI for Data Engineers",
+    issuer: "IBM (Coursera)",
+    image: "/cert-ibm-genai.jpg",
+    postLink: "https://www.linkedin.com/posts/shariq-mateen-61b724264_generativeai-dataengineering-aifordata-activity-7410756207151304704-o3Zh?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEDkFHcBIAei9XmZgojERUt2btK5pTj8B0o",
+  }
 ];
 
 const contactLinks = [
@@ -1143,6 +1160,68 @@ export default function Home() {
                         </p>
                       </CardContent>
                     </Card>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="certifications" className="section-shell px-6 py-20 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Certifications"
+                title="Continuous learning and recognized expertise"
+                description="Professional certifications validating specialized skills in Data Engineering and Generative AI."
+              />
+            </Reveal>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              {certifications.map((cert, index) => (
+                <Reveal key={cert.title} delay={index * 0.1}>
+                  <motion.div
+                    whileHover={{ y: -6 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="group h-full"
+                  >
+                    <div className="glass-panel relative flex h-full flex-col overflow-hidden rounded-3xl border border-violet-400/12 transition-all duration-300 group-hover:border-violet-400/30 group-hover:shadow-[0_20px_60px_rgba(124,58,237,0.15)]">
+                      <div className="relative overflow-hidden border-b border-violet-400/10 bg-[#080a14] p-6">
+                        <div className="flex justify-center">
+                          <img
+                            src={cert.image}
+                            alt={cert.title}
+                            className="h-72 w-auto max-w-full rounded-md object-contain shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        {cert.award && (
+                          <span className="absolute left-6 top-6 rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 shadow-[0_0_15px_rgba(251,191,36,0.3)] backdrop-blur-md">
+                            {cert.award}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="flex flex-1 flex-col p-6">
+                        <h3 className="text-xl font-bold text-white leading-snug">
+                          {cert.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-slate-400">
+                          {cert.issuer}
+                        </p>
+                        
+                        <div className="mt-auto pt-6">
+                          <a
+                            href={cert.postLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-400/20 bg-violet-400/10 px-4 py-3 text-sm font-medium text-violet-200 transition-colors hover:bg-violet-400/20"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            View LinkedIn Post
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </motion.div>
                 </Reveal>
               ))}

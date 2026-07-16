@@ -187,6 +187,7 @@ const projects: Project[] = [
       label: "LinkedIn Post",
       href: "https://www.linkedin.com/posts/shariq-mateen-61b724264_dataengineering-sqlserver-etl-activity-7366721308136599552-R59R?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEDkFHcBIAei9XmZgojERUt2btK5pTj8B0o",
     },
+    projectImage: "/superstore-dashboard.png",
   },
   {
     title: "AWS + Snowflake Weather Data Pipeline",
@@ -228,6 +229,7 @@ const projects: Project[] = [
       "Designed staging pipelines, surrogate key strategy, and reusable Pentaho transformations.",
     results: "Created a reliable warehouse foundation for cross-functional analytics.",
     github: "https://github.com/ShariqMateen",
+    projectImage: "/pentaho-etl.png",
   },
   {
     title: "AI Automation using n8n",
@@ -316,6 +318,7 @@ const projects: Project[] = [
       "Designed robust schemas, indexing strategies, and query patterns for operational and analytical use cases.",
     results: "Improved maintainability and query performance across multiple scenarios.",
     github: "https://github.com/ShariqMateen",
+    projectImage: "/database-design.png",
   },
 ];
 
@@ -677,16 +680,17 @@ function ProjectCard({
         <div className="glass-panel relative h-full overflow-hidden rounded-3xl border border-violet-400/12 transition-all duration-300 group-hover:border-violet-400/30 group-hover:shadow-[0_20px_60px_rgba(124,58,237,0.15)]">
           {/* Image area */}
           {hasImage ? (
-            <div className="relative overflow-hidden border-b border-violet-400/10">
+            <div className="relative overflow-hidden border-b border-violet-400/10 bg-[#0d1130]">
               <img
                 src={project.projectImage}
                 alt={project.title}
-                className="h-52 w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                className="h-56 w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                style={{ objectPosition: "center center" }}
               />
-              {/* Dark overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080b18]/80 via-transparent to-transparent" />
+              {/* Subtle bottom fade only */}
+              <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[#0d1130]/70 to-transparent" />
               {/* Category pill on image */}
-              <span className="absolute left-4 top-4 rounded-full border border-violet-400/30 bg-violet-900/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200 backdrop-blur-md">
+              <span className="absolute left-4 top-4 rounded-full border border-violet-400/30 bg-violet-900/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200 backdrop-blur-md">
                 {project.category}
               </span>
             </div>
